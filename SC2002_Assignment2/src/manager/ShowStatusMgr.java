@@ -150,33 +150,51 @@ public class ShowStatusMgr {
 		return true;
 	}
 	
-	public static boolean updateSeat(int showStatusID, int row, int col) {
-		if(Validator.validateShowStatus(showStatusID) ==false) {
-			return false;
+	public static SeatType[][] updateCacheSeat(SeatType[][] seats, int row, int col) {
+		if(seats == null){
+			return null;
 		}
-		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
-		SeatType [][] seats = buffer.getseatStatus();
 		if(row >= seats.length || col>=seats[0].length) {
-			return false;
+			return null;
 		}
 		SeatType type = seats[row][col];
 		if(type == null || ValidSeat(type) == false) {
-			return false;
+			return null;
 		}
 		
 		int i = row;
 		int j = col;
-		buffer.getseatStatus()[i][j] = takenSeat(type);
+		seats[i][j] = takenSeat(type);
 		if(type == SeatType.COUPLE_1) {
-			buffer.getseatStatus()[i][j+1] = takenSeat(SeatType.COUPLE_2);
+			seats[i][j+1] = takenSeat(SeatType.COUPLE_2);
 		}
 		if(type == SeatType.COUPLE_2) {
-			buffer.getseatStatus()[i][j-1] = takenSeat(SeatType.COUPLE_1);
+			seats[i][j-1] = takenSeat(SeatType.COUPLE_1);
 		}
+		return seats;
+	}
+	
+	public static SeatType[][] getCopySeatPlan(SeatType[][] type){
+		SeatType[][] cpy = new SeatType[type.length][type[0].length];
+		for(int i=0;i<type.length;i++) {
+			for(int j=0;j<type[0].length;j++) {
+				cpy[i][j] = type[i][j];
+			}
+		}
+		return cpy;
+	}
+	
+	public static boolean updateSeat(int showStatusID, SeatType[][] seats) {
+		if(Validator.validateShowStatus(showStatusID) ==false) {
+			return false;
+		}
+		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
+		buffer.setseatStatus(seats);
 		showStatusList.put(buffer.getShowStatusID(), buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
+	
 	
 	private static boolean ValidSeat(SeatType type) {
 		if(type == SeatType.COUPLE_1_T) {
@@ -197,6 +215,7 @@ public class ShowStatusMgr {
 		
 		return true;
 	}
+	
 	private static SeatType takenSeat(SeatType type) {
 		if(type == SeatType.COUPLE_1) {
 			return SeatType.COUPLE_1_T;

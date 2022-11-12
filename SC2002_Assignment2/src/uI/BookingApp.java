@@ -10,6 +10,7 @@ import database.Data;
 import manager.BookingMgr;
 import manager.CinemaMgr;
 import manager.CineplexMgr;
+import manager.MovieMgr;
 import manager.ShowStatusMgr;
 import manager.UserAccountMgr;
 import utils.DateUtils;
@@ -40,60 +41,86 @@ public class BookingApp {
 				break;
 			}
 		}
-
+		
 		ShowStatus buffer = showStatusList.get(index);
 		Cinema cinema = CinemaMgr.getCinemaByID(buffer.getCinemaID());
 		UserAccount user = UserAccountMgr.getUserAccount(AppState.getUserID());
 		Cineplex cineplex = CineplexMgr.getCineplexByID(buffer.getCineplexID());
+		Movie movie = MovieMgr.getMovieByID(AppState.getMovieID());
+		SeatType[][] tmp = ShowStatusMgr.getCopySeatPlan(buffer.getseatStatus());
+		double totalPrice =0;
+		ArrayList<String> seatIDs = new ArrayList<>();
+		System.out.print("Please enter the number of tickets that you want to buy: ");
+		int choice = sc.nextInt();
+		sc.nextLine();
 		
-		StringToSeat.printSeat(buffer.getseatStatus());
-		
-		int i=0,j=0;
-		String seatID ="";
-		while(true) {
-			System.out.print("Enter SeatID (A0): ");
-			 seatID = sc.nextLine();
-			String alpha=  "ABCDEFGHIJKLMNOP";
-			for(int y=0;y<alpha.length();y++) {
-				if(seatID.charAt(0) == alpha.charAt(y)) {
-					j=y;
+		for(int s=0;s<choice;s++) {
+			StringToSeat.printSeat(tmp);
+			int i=0,j=0;
+			String seatID ="";
+			while(true) {
+				System.out.print("Enter SeatID (A0): ");
+				seatID = sc.nextLine();
+				String alpha=  "ABCDEFGHIJKLMNOP";
+				for(int y=0;y<alpha.length();y++) {
+					if(seatID.charAt(0) == alpha.charAt(y)) {
+						j=y;
+						break;
+					}
+				}
+				i = Character.getNumericValue(seatID.charAt(1));
+				if(i>= buffer.getseatStatus().length || j>=buffer.getseatStatus()[0].length) {
+					System.out.print("Invalid Seat, Please try again\n");
+					continue;
+				}
+				tmp = ShowStatusMgr.updateCacheSeat(tmp, i, j);
+				if(tmp != null) {
+					seatIDs.add(seatID);
 					break;
+				}else {
+					System.out.print("Invalid Seat, Please try again\n");
 				}
 			}
-			i = Character.getNumericValue(seatID.charAt(1));
-			if(i>= buffer.getseatStatus().length || j>=buffer.getseatStatus()[0].length) {
-				System.out.print("Invalid Seat, Please try again\n");
-				continue;
-			}
-			boolean pass = ShowStatusMgr.updateSeat(buffer.getShowStatusID(), i,j);
-			if(pass) {
-				break;
-			}else {
-				System.out.print("Invalid Seat, Please try again\n");
-			}
+			
+			double price = PriceCalculator.calculate(cinema.getCinemaType(), tmp[i][j], user.getAge(), 
+					buffer.getShowDate(), buffer.getShowTime(),buffer.getMovieType(), user.getIsMember());
+			
+			totalPrice += price;
 		}
 		
-		double price = PriceCalculator.calculate(cinema.getCinemaType(), buffer.getseatStatus()[i][j], user.getAge(), 
-				buffer.getShowDate(), buffer.getShowTime(),buffer.getMovieType(), user.getIsMember());
 		
-		LocalDate bookDate = LocalDate.now();
-		LocalTime bookTime = LocalTime.now();
-		int newID = BookingMgr.createBooking(AppState.getUserID(), buffer.getShowStatusID(), price, bookDate, bookTime);
+		boolean pay = PaymentApp.AppMain(sc,totalPrice);
 		
-		Booking booking = BookingMgr.getBookingCopy(newID);
-		System.out.println("\nTicket details:\n");
-		System.out.println("Name: "+user.getUsername());
-		System.out.println("Mobile Number: "+user.getMobileNumber());
-		System.out.println("Email: "+user.getEmail());
-		System.out.println("TID: "+booking.getTID());
-		System.out.println("Ticket Price: "+booking.getPrice()+" SGD");
-		System.out.println("MovieType: "+buffer.getMovieType());
-		System.out.println("SeatID: "+seatID);
-		System.out.println("Cinema Code: "+cinema.getCinemaCode());
-		System.out.println("Cinema Class: "+cinema.getCinemaType());
-		System.out.println("Cineplex Name: "+cineplex.getName());
+		if(pay) {
+			System.out.print("\n========================================\n");
+			System.out.print("               Ticket Details             \n");
+			System.out.print("========================================\n");
+			ShowStatusMgr.updateSeat(buffer.getShowStatusID(), tmp);
+			for(int i=0;i<seatIDs.size();i++) {
+				LocalDate bookDate = LocalDate.now();
+				LocalTime bookTime = LocalTime.now();
+				int newID = BookingMgr.createBooking(AppState.getUserID(), buffer.getShowStatusID(), totalPrice, bookDate, bookTime);
+				Booking booking = BookingMgr.getBookingCopy(newID);
+				System.out.println("\nTicket details:\n");
+				System.out.println("Name: "+user.getUsername());
+				System.out.println("Mobile Number: "+user.getMobileNumber());
+				System.out.println("Email: "+user.getEmail());
+				System.out.println("TID: "+booking.getTID());
+				System.out.println("Ticket Price: "+booking.getPrice()+" SGD");
+				System.out.println("Movie title: "+movie.getTitle());
+				System.out.println("MovieType: "+buffer.getMovieType());
+				System.out.println("SeatID: "+seatIDs.get(i));
+				System.out.println("Cinema Code: "+cinema.getCinemaCode());
+				System.out.println("Cinema Class: "+cinema.getCinemaType());
+				System.out.println("Cineplex Name: "+cineplex.getName());
+			}
+		}
+		else {
+			System.out.println("Fail Payment");
+		}
 		
 	}
+
 	
 	
 }
