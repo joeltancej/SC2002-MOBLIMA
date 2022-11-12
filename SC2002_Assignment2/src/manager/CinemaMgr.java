@@ -12,21 +12,20 @@ import model.*;
 
 
 public class CinemaMgr {
-	private static HashMap<Integer,Cinema> cinemaList =  Data.cinemaList;
 	
 	public static int createCinema(int cineplexID, CinemaType type,SeatType[][] seatPlan, String cinemaCode) {
 		if(Validator.validateCinema(cineplexID, cinemaCode) == true) {
 			return -1;
 		}
-		int cinemaID = Helper.getUniqueId(cinemaList);
+		int cinemaID = Helper.getUniqueId(Data.cinemaList);
 		Cinema newCinema = new Cinema(cinemaID,cineplexID,type,seatPlan,cinemaCode);
-		cinemaList.put(cinemaID, newCinema);
+		Data.cinemaList.put(cinemaID, newCinema);
 		Data.saveFile(FileType.CINEMA);
 		return cinemaID;
 	}
 	
 	public static Cinema getCinemaByID(int cinemaID) {
-		for(Cinema cinema: cinemaList.values()) {
+		for(Cinema cinema: Data.cinemaList.values()) {
 			if(cinema.getCinemaID() == cinemaID) {
 				return Cinema.copy(cinema);
 			}
@@ -35,7 +34,7 @@ public class CinemaMgr {
 	}
 	public static ArrayList<Cinema> getAllCinemaList(){
 		ArrayList<Cinema> list = new ArrayList<Cinema>();
-		for(Cinema cinema: cinemaList.values()) {
+		for(Cinema cinema: Data.cinemaList.values()) {
 			Cinema buffer = Cinema.copy(cinema);
 			list.add(buffer);
 		}
@@ -47,7 +46,7 @@ public class CinemaMgr {
 			return null;
 		}
 		ArrayList<Cinema> list = new ArrayList<Cinema>();
-		for(Cinema cinema: cinemaList.values()) {
+		for(Cinema cinema: Data.cinemaList.values()) {
 			if(cinema.getCineplexID() == cineplexID) {
 				Cinema buffer = Cinema.copy(cinema);
 				list.add(buffer);

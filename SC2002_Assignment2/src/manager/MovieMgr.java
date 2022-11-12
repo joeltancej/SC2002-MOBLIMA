@@ -22,9 +22,9 @@ public class MovieMgr {
 		if(Validator.validateMovie(title)  == true) {
 			return -1;
 		}
-		int movieID = Helper.getUniqueId(movieList);
+		int movieID = Helper.getUniqueId(Data.movieList);
 		Movie buffer = new Movie(movieID,title,director,casts,movieContent,duration,state);
-		movieList.put(movieID, buffer);
+		Data.movieList.put(movieID, buffer);
 		MovieRankMgr.createMovieRank(movieID, numRaters, overallRating, sales);
 		Data.saveFile(FileType.MOVIE);
 		return movieID;
@@ -37,9 +37,9 @@ public class MovieMgr {
 		if(Validator.validateMovie(title) == true) {
 			return -1;
 		}
-		int movieID = Helper.getUniqueId(movieList);
+		int movieID = Helper.getUniqueId(Data.movieList);
 		Movie buffer = new Movie(movieID,title,director,casts,movieContent,duration,state);
-		movieList.put(movieID, buffer);
+		Data.movieList.put(movieID, buffer);
 		MovieRankMgr.createMovieRank(movieID);
 		
 		Data.saveFile(FileType.MOVIE);
@@ -67,7 +67,7 @@ public class MovieMgr {
 		}
 		Movie updateMovie = SearchUtils.searchMovie(movieID);
 		updateMovie.setMovieContent(text);
-		movieList.put(movieID, updateMovie);
+		Data.movieList.put(movieID, updateMovie);
 		Data.saveFile(FileType.MOVIE);
 		return true;
 	}
@@ -79,7 +79,7 @@ public class MovieMgr {
 		}
 		Movie updateMovie = SearchUtils.searchMovie(movieID);
 		updateMovie.setDirector(text);
-		movieList.put(movieID, updateMovie);
+		Data.movieList.put(movieID, updateMovie);
 		Data.saveFile(FileType.MOVIE);
 		return true;
 	}
@@ -93,7 +93,7 @@ public class MovieMgr {
 		}
 		Movie updateMovie = SearchUtils.searchMovie(movieID);
 		updateMovie.setTitle(title);
-		movieList.put(movieID, updateMovie);
+		Data.movieList.put(movieID, updateMovie);
 		Data.saveFile(FileType.MOVIE);
 		return true;
 	}
@@ -107,7 +107,7 @@ public class MovieMgr {
 		}
 		Movie updateMovie = SearchUtils.searchMovie(movieID);
 		updateMovie.setMovieState(state);
-		movieList.put(movieID, updateMovie);
+		Data.movieList.put(movieID, updateMovie);
 		Data.saveFile(FileType.MOVIE);
 		return true;
 		
@@ -125,7 +125,7 @@ public class MovieMgr {
 			}
 		}
 		casts.add(cast);
-		movieList.put(movieID, updateMovie);
+		Data.movieList.put(movieID, updateMovie);
 		Data.saveFile(FileType.MOVIE);
 		return true;
 	}
@@ -147,7 +147,7 @@ public class MovieMgr {
 			return false;
 		}
 		casts.remove(index);
-		movieList.put(movieID, updateMovie);
+		Data.movieList.put(movieID, updateMovie);
 		Data.saveFile(FileType.MOVIE);
 		return true;
 	}
@@ -158,7 +158,7 @@ public class MovieMgr {
 		}
 		Movie updateMovie = SearchUtils.searchMovie(movieID);
 		updateMovie.setDuration(duration);
-		movieList.put(movieID, updateMovie);
+		Data.movieList.put(movieID, updateMovie);
 		Data.saveFile(FileType.MOVIE);
 		return true;
 	}
@@ -182,7 +182,7 @@ public class MovieMgr {
 	
 	public static ArrayList<Movie> getAllMovieList() {
 		ArrayList<Movie> list = new ArrayList<Movie>();
-		for(Movie movie: movieList.values()) {
+		for(Movie movie: Data.movieList.values()) {
 			Movie buffer = Movie.copy(movie);
 			list.add(buffer);
 		}

@@ -17,14 +17,14 @@ public class MovieRankMgr {
 	
 	public static ArrayList<MovieRank> getAllMovieRankList(){
 		ArrayList<MovieRank> list = new ArrayList<>();
-		for(MovieRank rank : movieRankList.values()) {
+		for(MovieRank rank : Data.movieRankList.values()) {
 			list.add(MovieRank.copy(rank));
 		}
 		return list;
 	}
 	
 	public static MovieRank getMovieRankByMovieID(int movieID){
-		for(MovieRank rank : movieRankList.values()) {
+		for(MovieRank rank : Data.movieRankList.values()) {
 			if(rank.getMovieID() == movieID) {
 				return MovieRank.copy(rank);
 			}
@@ -36,9 +36,9 @@ public class MovieRankMgr {
 		if(Validator.validateMovie(movieID) == false) {
 			return false;
 		}
-		int movieRankID = Helper.getUniqueId(movieRankList);
+		int movieRankID = Helper.getUniqueId(Data.movieRankList);
 		MovieRank newMovieRank = new MovieRank(movieRankID, movieID, numRaters, overallRating, sales);
-		movieRankList.put(movieRankID, newMovieRank);
+		Data.movieRankList.put(movieRankID, newMovieRank);
 		Data.saveFile(FileType.MOVIE_RANK);
 		return true;
 	}
@@ -47,9 +47,9 @@ public class MovieRankMgr {
 		if(Validator.validateMovie(movieID) == false) {
 			return false;
 		}
-		int movieRankID = Helper.getUniqueId(movieRankList);
+		int movieRankID = Helper.getUniqueId(Data.movieRankList);
 		MovieRank newMovieRank = new MovieRank(movieRankID, movieID, numRaters, overallRating);
-		movieRankList.put(movieRankID, newMovieRank);
+		Data.movieRankList.put(movieRankID, newMovieRank);
 		Data.saveFile(FileType.MOVIE_RANK);
 		return true;
 	}
@@ -59,9 +59,9 @@ public class MovieRankMgr {
 		if(Validator.validateMovie(movieID) == false) {
 			return false;
 		}
-		int movieRankID = Helper.getUniqueId(movieRankList);
+		int movieRankID = Helper.getUniqueId(Data.movieRankList);
 		MovieRank newMovieRank = new MovieRank(movieRankID, movieID);
-		movieRankList.put(movieRankID, newMovieRank);
+		Data.movieRankList.put(movieRankID, newMovieRank);
 		Data.saveFile(FileType.MOVIE_RANK);
 		return true;
 	}
@@ -74,7 +74,7 @@ public class MovieRankMgr {
 		MovieRank buffer2 = SearchUtils.searchMovieRankByMovieID(movieID);
 		double preSales = buffer2.getSales();
 		buffer2.setSales(preSales+price);
-		movieRankList.put(buffer2.getMovieRankID(), buffer2);
+		Data.movieRankList.put(buffer2.getMovieRankID(), buffer2);
 		Data.saveFile(FileType.MOVIE_RANK);
 		return true;
 	}
@@ -88,7 +88,7 @@ public class MovieRankMgr {
 		overall = (overall*buffer.getNumRaters() + rating) / (buffer.getNumRaters() +1);
 		buffer.setOverallRating(overall);
 		buffer.setNumRaters(buffer.getNumRaters()+1);
-		movieRankList.put(buffer.getMovieRankID(), buffer);
+		Data.movieRankList.put(buffer.getMovieRankID(), buffer);
 		Data.saveFile(FileType.MOVIE_RANK);
 		return true;
 	}
@@ -106,7 +106,7 @@ public class MovieRankMgr {
 		overall = overall*buffer.getNumRaters() - review.getRating() + rating;
 		overall = overall/buffer.getNumRaters();
 		buffer.setOverallRating(overall);
-		movieRankList.put(buffer.getMovieRankID(), buffer);
+		Data.movieRankList.put(buffer.getMovieRankID(), buffer);
 		Data.saveFile(FileType.MOVIE_RANK);
 		return true;
 	}

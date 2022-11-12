@@ -12,11 +12,11 @@ import utils.SearchUtils;
 import utils.Validator;
 
 public class HolidayMgr {
-	private static HashMap<Integer,Holiday> holidayList = Data.holidayList;
+	
 	
 	public static ArrayList<Holiday> getAllHolidayList(){
 		ArrayList<Holiday> list = new ArrayList<Holiday>();
-		for(Holiday holiday : holidayList.values()) {
+		for(Holiday holiday : Data.holidayList.values()) {
 			list.add(Holiday.copy(holiday));
 		}
 		return list;
@@ -26,9 +26,9 @@ public class HolidayMgr {
 		if(Validator.validateHoliday(name,date)  == true ) {
 			return -1;
 		}
-		int holidayId = Helper.getUniqueId(holidayList);
+		int holidayId = Helper.getUniqueId(Data.holidayList);
 		Holiday holiday = new Holiday(holidayId,name,date);
-		holidayList.put(holidayId, holiday);
+		Data.holidayList.put(holidayId, holiday);
 		Data.saveFile(FileType.HOLIDAY);
 		return holidayId;
 	}
@@ -37,7 +37,7 @@ public class HolidayMgr {
 		if(Validator.validateHoliday(holidayId) == false) {
 			return false;
 		}
-		holidayList.remove(holidayId);
+		Data.holidayList.remove(holidayId);
 		Data.saveFile(FileType.HOLIDAY);
 		return true;
 	}
@@ -49,7 +49,7 @@ public class HolidayMgr {
 		}
 		Holiday holiday = SearchUtils.searchHoliday(name, date);
 		int holidayId = holiday.getHolidayID();
-		holidayList.remove(holidayId);
+		Data.holidayList.remove(holidayId);
 		Data.saveFile(FileType.HOLIDAY);
 		return true;
 	}
@@ -63,7 +63,7 @@ public class HolidayMgr {
 		}
 		Holiday holiday = SearchUtils.searchHoliday(name, date);
 		holiday.setHolidayName(newName);
-		holidayList.put(holiday.getHolidayID(), holiday);
+		Data.holidayList.put(holiday.getHolidayID(), holiday);
 		Data.saveFile(FileType.HOLIDAY);
 		return true;
 		
@@ -79,7 +79,7 @@ public class HolidayMgr {
 			return false;
 		}
 		holiday.setHolidayName(newName);
-		holidayList.put(holiday.getHolidayID(), holiday);
+		Data.holidayList.put(holiday.getHolidayID(), holiday);
 		Data.saveFile(FileType.HOLIDAY);
 		return true;
 	}
@@ -93,7 +93,7 @@ public class HolidayMgr {
 			return false;
 		}
 		updateHoliday.setHolidayDate(newDate);
-		holidayList.put(updateHoliday.getHolidayID(), updateHoliday);
+		Data.holidayList.put(updateHoliday.getHolidayID(), updateHoliday);
 		Data.saveFile(FileType.HOLIDAY);
 		return true;
 		
@@ -109,7 +109,7 @@ public class HolidayMgr {
 			return false;
 		}
 		holiday.setHolidayDate(newDate);
-		holidayList.put(holiday.getHolidayID(), holiday);
+		Data.holidayList.put(holiday.getHolidayID(), holiday);
 		Data.saveFile(FileType.HOLIDAY);
 		return true;
 		

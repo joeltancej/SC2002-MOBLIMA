@@ -18,7 +18,7 @@ public class ReviewMgr {
 		if(Validator.validateUser(userID)== false ) {
 			return null;
 		}
-		for(MovieReview review : movieReviewList.values()) {
+		for(MovieReview review : Data.movieReviewList.values()) {
 			if(review.getUserID() == userID) {
 				list.add(MovieReview.copy(review));
 			}
@@ -31,7 +31,7 @@ public class ReviewMgr {
 		if(Validator.validateMovie(movieID) == false) {
 			return null;
 		}
-		for(MovieReview review : movieReviewList.values()) {
+		for(MovieReview review : Data.movieReviewList.values()) {
 			if(review.getMovieID() == movieID) {
 				list.add(MovieReview.copy(review));
 			}
@@ -46,9 +46,9 @@ public class ReviewMgr {
 		if(Validator.validateReview(userID, movieID) == true) {
 			return false;
 		}
-		int reviewID = Helper.getUniqueId(movieReviewList);
+		int reviewID = Helper.getUniqueId(Data.movieReviewList);
 		MovieReview newReview = new MovieReview(reviewID,userID,movieID,rating,comment);
-		movieReviewList.put(reviewID, newReview);
+		Data.movieReviewList.put(reviewID, newReview);
 		MovieRankMgr.addRating(movieID, userID, rating);
 		Data.saveFile(FileType.MOVIE_REVIEW);
 		return true;
@@ -61,9 +61,9 @@ public class ReviewMgr {
 		if(Validator.validateReview(userID, movieID) == true) {
 			return false;
 		}
-		int reviewID = Helper.getUniqueId(movieReviewList);
+		int reviewID = Helper.getUniqueId(Data.movieReviewList);
 		MovieReview newReview = new MovieReview(reviewID,userID,movieID,comment);
-		movieReviewList.put(reviewID, newReview);
+		Data.movieReviewList.put(reviewID, newReview);
 		Data.saveFile(FileType.MOVIE_REVIEW);
 		return true;
 	}
@@ -75,9 +75,9 @@ public class ReviewMgr {
 		if(Validator.validateReview(userID, movieID) == true) {
 			return false;
 		}
-		int reviewID = Helper.getUniqueId(movieReviewList);
+		int reviewID = Helper.getUniqueId(Data.movieReviewList);
 		MovieReview newReview = new MovieReview(reviewID,userID,movieID,rating);
-		movieReviewList.put(reviewID, newReview);
+		Data.movieReviewList.put(reviewID, newReview);
 		MovieRankMgr.addRating(movieID, userID, rating);
 		Data.saveFile(FileType.MOVIE_REVIEW);
 		return true;
@@ -94,7 +94,7 @@ public class ReviewMgr {
 		MovieReview buffer = SearchUtils.searchMovieReview(userID, movieID);
 		MovieRankMgr.changeRating(movieID, userID, num);
 		buffer.setRating(num);
-		movieReviewList.put(buffer.getReviewID(), buffer);
+		Data.movieReviewList.put(buffer.getReviewID(), buffer);
 		Data.saveFile(FileType.MOVIE_REVIEW);
 		return true;
 	}
@@ -109,7 +109,7 @@ public class ReviewMgr {
 		}
 		MovieReview buffer = SearchUtils.searchMovieReview(userID, movieID);
 		buffer.setComment(comment);
-		movieReviewList.put(buffer.getReviewID(), buffer);
+		Data.movieReviewList.put(buffer.getReviewID(), buffer);
 		Data.saveFile(FileType.MOVIE_REVIEW);
 		return true;
 	}

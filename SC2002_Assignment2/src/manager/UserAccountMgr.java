@@ -27,9 +27,9 @@ public class UserAccountMgr {
 		if(Validator.validateUser(username) == true) {
 			return false;
 		}
-		int userID = Helper.getUniqueId(userAccountList);
+		int userID = Helper.getUniqueId(Data.userAccountList);
 		UserAccount newUser = new UserAccount(userID,username,password,mobileNumber,email,age,isMember);
-		userAccountList.put(userID, newUser);
+		Data.userAccountList.put(userID, newUser);
 		Data.saveFile(FileType.USER);
 		return true;
 	}
@@ -40,7 +40,7 @@ public class UserAccountMgr {
 		}
 		UserAccount updateUser = SearchUtils.searchUserAccount(userID);
 		updateUser.setIsMember(isMember);
-		userAccountList.put(userID, updateUser);
+		Data.userAccountList.put(userID, updateUser);
 		Data.saveFile(FileType.USER);
 		return true;
 	}
@@ -51,7 +51,7 @@ public class UserAccountMgr {
 		}
 		UserAccount updateUser = SearchUtils.searchUserAccount(userID);
 		updateUser.setEmail(text);
-		userAccountList.put(userID, updateUser);
+		Data.userAccountList.put(userID, updateUser);
 		Data.saveFile(FileType.USER);
 		return true;
 	}
@@ -62,7 +62,7 @@ public class UserAccountMgr {
 		}
 		UserAccount updateUser = SearchUtils.searchUserAccount(userID);
 		updateUser.setMobileNumber(text);
-		userAccountList.put(userID, updateUser);
+		Data.userAccountList.put(userID, updateUser);
 		Data.saveFile(FileType.USER);
 		return true;
 	}
@@ -73,7 +73,7 @@ public class UserAccountMgr {
 		}
 		UserAccount updateUser = SearchUtils.searchUserAccount(userID);
 		updateUser.setPassword(text);
-		userAccountList.put(userID, updateUser);
+		Data.userAccountList.put(userID, updateUser);
 		Data.saveFile(FileType.USER);
 		return true;
 	}
@@ -87,7 +87,7 @@ public class UserAccountMgr {
 			return false;
 		}
 		updateUser.setUsername(text);
-		userAccountList.put(userID, updateUser);
+		Data.userAccountList.put(userID, updateUser);
 		Data.saveFile(FileType.USER);
 		return true;
 	}
@@ -99,7 +99,7 @@ public class UserAccountMgr {
 		UserAccount updateUser = SearchUtils.searchUserAccount(userID);
 
 		updateUser.setAge(num);
-		userAccountList.put(userID, updateUser);
+		Data.userAccountList.put(userID, updateUser);
 		Data.saveFile(FileType.USER);
 		return true;
 	}

@@ -19,7 +19,7 @@ public class ShowStatusMgr {
 	
 	public static ArrayList<ShowStatus> getAllStatusListByMovieID(int movieID){
 		ArrayList<ShowStatus> list = new ArrayList<ShowStatus>();
-		for(ShowStatus buffer : showStatusList.values()) {
+		for(ShowStatus buffer : Data.showStatusList.values()) {
 			if(buffer.getMovieID() == movieID) {
 				
 				list.add(ShowStatus.copy(buffer));
@@ -30,7 +30,7 @@ public class ShowStatusMgr {
 	
 	public static ArrayList<ShowStatus> getAllStatusList(){
 		ArrayList<ShowStatus> list = new ArrayList<ShowStatus>();
-		for(ShowStatus buffer : showStatusList.values()) {
+		for(ShowStatus buffer : Data.showStatusList.values()) {
 			list.add(ShowStatus.copy(buffer));
 		}
 		return list;
@@ -56,7 +56,7 @@ public class ShowStatusMgr {
 		int showStatusID = Helper.getUniqueId(showStatusList);
 		ShowStatus buffer = new ShowStatus(showStatusID, cineplexID, cinemaID, 
 			movieID, showDate, showTime, movieType, seatStatus);
-		showStatusList.put(showStatusID, buffer);
+		Data.showStatusList.put(showStatusID, buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
@@ -76,7 +76,7 @@ public class ShowStatusMgr {
 		SeatType [][] seatStatus = cinema.getSeatPlan();
 		ShowStatus buffer = new ShowStatus(showStatusID, cineplexID, cinemaID, 
 			movieID, showDate, showTime, movieType, seatStatus);
-		showStatusList.put(showStatusID, buffer);
+		Data.showStatusList.put(showStatusID, buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
@@ -85,7 +85,7 @@ public class ShowStatusMgr {
 		if(Validator.validateShowStatus(showStatusID) == false) {
 			return false;
 		}
-		showStatusList.remove(showStatusID);
+		Data.showStatusList.remove(showStatusID);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
@@ -96,7 +96,7 @@ public class ShowStatusMgr {
 		}
 		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
 		buffer.setMovieID(movieID);
-		showStatusList.put(buffer.getShowStatusID(), buffer);
+		Data.showStatusList.put(buffer.getShowStatusID(), buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
@@ -111,7 +111,7 @@ public class ShowStatusMgr {
 		}
 		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
 		buffer.setMovieID(movie.getMovieID());
-		showStatusList.put(buffer.getShowStatusID(), buffer);
+		Data.showStatusList.put(buffer.getShowStatusID(), buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
@@ -122,7 +122,7 @@ public class ShowStatusMgr {
 		}
 		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
 		buffer.setShowDate(date);
-		showStatusList.put(buffer.getShowStatusID(), buffer);
+		Data.showStatusList.put(buffer.getShowStatusID(), buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
@@ -133,7 +133,7 @@ public class ShowStatusMgr {
 		}
 		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
 		buffer.setShowTime(time);
-		showStatusList.put(buffer.getShowStatusID(), buffer);
+		Data.showStatusList.put(buffer.getShowStatusID(), buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
@@ -145,7 +145,7 @@ public class ShowStatusMgr {
 		}
 		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
 		buffer.setMovieType(type);
-		showStatusList.put(buffer.getShowStatusID(), buffer);
+		Data.showStatusList.put(buffer.getShowStatusID(), buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
@@ -190,7 +190,7 @@ public class ShowStatusMgr {
 		}
 		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
 		buffer.setseatStatus(seats);
-		showStatusList.put(buffer.getShowStatusID(), buffer);
+		Data.showStatusList.put(buffer.getShowStatusID(), buffer);
 		Data.saveFile(FileType.SHOW_STATUS);
 		return true;
 	}
