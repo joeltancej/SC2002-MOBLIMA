@@ -128,7 +128,7 @@ public class PriceCalculator {
 	}
 	
 	private static boolean isStudent(int age) {
-		if(age>=6 && age<=12) {
+		if(age>=7 && age<=18) {
 			return true;
 		}
 		return false;

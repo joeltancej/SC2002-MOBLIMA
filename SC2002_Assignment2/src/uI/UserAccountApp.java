@@ -9,9 +9,9 @@ public class UserAccountApp {
 		System.out.print("             Movie Listing              \n");
 		System.out.print("========================================\n");
 		System.out.print("\n1: Login\n");
-		System.out.print("2: SignUp\n");
-		System.out.print("0: Back to Main Menu\n");
-		System.out.print("Please Choose Your Action: ");
+		System.out.print("2: Sign up\n");
+		System.out.print("0: Back to main menu\n");
+		System.out.print("Enter your choice: ");
 		num = sc.nextInt();
 		return num;
 	}
@@ -25,9 +25,9 @@ public class UserAccountApp {
 			System.out.print("              User Account                \n");
 			System.out.print("========================================\n");
 			System.out.print("1) Login\n");
-			System.out.print("2) SignUp\n");
-			System.out.println("0) Go Back\n");
-			System.out.print("Enter Your Choice: ");
+			System.out.print("2) Sign up\n");
+			System.out.println("0) Go back\n");
+			System.out.print("Enter your choice: ");
 			num = sc.nextInt();
 			switch(num) {
 				case 0:
@@ -52,19 +52,19 @@ public class UserAccountApp {
 		System.out.print("\n========================================\n");
 		System.out.print("               User Login                 \n");
 		System.out.print("========================================\n");
-		System.out.print("Enter Username: ");
+		System.out.print("Enter username: ");
 		sc.nextLine();
 		str = sc.nextLine();
-		System.out.print("Enter Password: ");
+		System.out.print("Enter password: ");
 		str2 = sc.nextLine();
 		int userID =UserAccountMgr.validateUserLogin(str, str2);
 		if(userID <0) {
-			System.out.println("Login Failed, Please Try Again\n");
+			System.out.println("Login failed. Please try again.\n");
 			return false;
 		}
 		else {
 			AppState.setUserID(userID);
-			System.out.println("Log in Sucess\n");
+			System.out.println("Login success.\n");
 			return true;
 		}
 	}
@@ -81,7 +81,7 @@ public class UserAccountApp {
 		str = sc.nextLine();
 		System.out.print("Enter Your Password: ");
 		str2 = sc.nextLine();
-		System.out.print("Enter Your MobileNumber: ");
+		System.out.print("Enter Your Mobile Number: ");
 		str3 = sc.nextLine();
 		System.out.print("Enter Your Email: ");
 		str4 = sc.nextLine();
@@ -91,11 +91,11 @@ public class UserAccountApp {
 		boolean member = sc.next().equals("Y") ? true : false;
 		boolean a =UserAccountMgr.createUserAccount(str, str2, str3, str4, age, member);
 		if(!a) {
-			System.out.println("Sign Up Failed, Please Try Again\n");
+			System.out.println("Sign up failed. Please try again.\n");
 			return false;
 		}
 		else {
-			System.out.println("Sign Up Sucess, Please try Login\n");
+			System.out.println("Sign up success! Please try logging in.\n");
 			return true;
 		}
 	}
