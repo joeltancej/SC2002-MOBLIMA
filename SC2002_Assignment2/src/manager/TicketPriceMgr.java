@@ -39,31 +39,31 @@ public class TicketPriceMgr {
 			case 8:
 				ticketPrice.setWeekEnd(num);
 				break;
-			case 10:
+			case 9:
 				ticketPrice.setWeekEnd3d(num);
 				break;
-			case 11:
+			case 10:
 				ticketPrice.setElderlyWeekDay(num);
 				break;
-			case 12:
+			case 11:
 				ticketPrice.setStudentWeekDay(num);
 				break;
-			case 13:
+			case 12:
 				ticketPrice.setStudentWeekDay3d(num);
 				break;
-			case 14:
+			case 13:
 				ticketPrice.setBlockBusterAdd(num);
 				break;
-			case 15:
+			case 14:
 				ticketPrice.setPlatPriceAdd(num);
 				break;
-			case 16:
+			case 15:
 				ticketPrice.setGoldPriceAdd(num);
 				break;
-			case 17:
+			case 16:
 				ticketPrice.setHolidayAdd(num);
 				break;
-			case 18:
+			case 17:
 				ticketPrice.setCard(num);
 				break;
 			default:

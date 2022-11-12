@@ -63,7 +63,7 @@ public class ShowTimeConfig {
 					System.out.print("Movie Updated\n");
 					break;
 				case 2:
-					System.out.print("Enter ShowDate:\n");
+					System.out.print("Enter Show Date (day, month, year):\n");
 					System.out.print("Enter day: ");
 					day = sc.nextInt();
 					System.out.print("Enter month:");
@@ -75,14 +75,14 @@ public class ShowTimeConfig {
 					System.out.print("Date Updated\n");
 					break;
 				case 3:
-					System.out.print("Enter ShowTime:\n");
+					System.out.print("Enter Show Time (hour, minute):\n");
 					System.out.print("Enter hour: ");
 					hour = sc.nextInt(); 
 					System.out.print("Enter minute:");
 					minute = sc.nextInt();
 					TimeUtils time = new TimeUtils(hour,minute);
 					ShowStatusMgr.updateShowTime(showStatusID, time);
-					System.out.print("ShowTime Updated\n");
+					System.out.print("Show Time Updated\n");
 					break;
 				case 4:
 					MovieType type = promptMovieTypeInput(sc);
@@ -189,7 +189,7 @@ public class ShowTimeConfig {
 		Cinema cinema = promptCinemaInput(sc, cineplex.getCineplexID());
 		cinemaID = cinema.getCinemaID();
 		
-		System.out.print("Enter ShowDate:\n");
+		System.out.print("Enter Show Date (day, month, year):\n");
 		System.out.print("Enter day: ");
 		day = sc.nextInt();
 		System.out.print("Enter month:");
@@ -198,7 +198,7 @@ public class ShowTimeConfig {
 		year = sc.nextInt();
 		DateUtils date = new DateUtils(day,month,year);
 		
-		System.out.print("Enter ShowTime:\n");
+		System.out.print("Enter Show Time (hour, minute):\n");
 		System.out.print("Enter hour: ");
 		hour = sc.nextInt(); 
 		System.out.print("Enter minute:");
@@ -209,10 +209,10 @@ public class ShowTimeConfig {
 		boolean pass = ShowStatusMgr.createShowStatus(cineplex.getCineplexID(), cinemaID, movie.getMovieID(), date, time, movieType);
 		
 		if(!pass) {
-			System.out.println("Fail to create show time");
+			System.out.println("Failed to create showtime.");
 		}
 		else {
-			System.out.println("Success create");
+			System.out.println("Successfully created.");
 		}
 		return;
 	}

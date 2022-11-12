@@ -11,7 +11,7 @@ public class SystemConfig {
 		while(true) {
 			int num =-1;
 			System.out.print("\n========================================\n");
-			System.out.print("              System Config               \n");
+			System.out.print("           System Configuration               \n");
 			System.out.print("========================================\n");
 			System.out.print("1) Edit TicketPrice\n");
 			System.out.print("2) Edit Holiday\n");
@@ -37,7 +37,7 @@ public class SystemConfig {
 	public static void EditTicketPrice(Scanner sc) {
 		while(true) {
 			System.out.print("\n========================================\n");
-			System.out.print("           Ticket Price Config            \n");
+			System.out.print("        Ticket Price Configuration            \n");
 			System.out.print("========================================\n");
 			System.out.println("1) Edit Mon To Wed (All sessions) ");
 			System.out.println("2) Edit Mon To Wed (All sessions, 3D) ");
@@ -154,7 +154,7 @@ public class SystemConfig {
 			
 			int num =-1;
 			System.out.print("\n========================================\n");
-			System.out.print("             Holiday Config               \n");
+			System.out.print("          Holiday Configuration               \n");
 			System.out.print("========================================\n");
 			System.out.print("1) View Holiday List\n");
 			System.out.print("2) Add Holiday\n");
