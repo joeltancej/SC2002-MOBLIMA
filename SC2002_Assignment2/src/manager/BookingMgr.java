@@ -15,7 +15,7 @@ import utils.TimeUtils;
 import utils.Validator;
 
 public class BookingMgr {
-	private static HashMap<Integer, Booking> bookingList = Data.bookingList;
+	
 	
 	
 	public static int createBooking(int userID, int showStatusID, double price,
@@ -29,7 +29,7 @@ public class BookingMgr {
 		int bookingID = Helper.getUniqueId(bookingList);
 		
 		Booking newBooking = new Booking(bookingID, userID, showStatusID, price, bookingDate, bookingTime);
-		bookingList.put(bookingID, newBooking);
+		Data.bookingList.put(bookingID, newBooking);
 		MovieRankMgr.addSales(buffer.getMovieID(),price);
 		Data.saveFile(FileType.BOOKING);
 		return bookingID;
@@ -46,11 +46,11 @@ public class BookingMgr {
 		TimeUtils bookingTime = TimeUtils.LocalTimeToTimeUtils(time);
 		ShowStatus buffer = SearchUtils.searchShowStatus(showStatusID);
 		
-		int bookingID = Helper.getUniqueId(bookingList);
+		int bookingID = Helper.getUniqueId(Data.bookingList);
 		
 		Booking newBooking = new Booking(bookingID, userID, showStatusID, price, bookingDate, bookingTime);
 		
-		bookingList.put(bookingID, newBooking);
+		Data.bookingList.put(bookingID, newBooking);
 		MovieRankMgr.addSales(buffer.getMovieID(),price);
 		Data.saveFile(FileType.BOOKING);
 		return bookingID;
@@ -70,7 +70,7 @@ public class BookingMgr {
 			return null;
 		}
 		ArrayList<Booking> list = new ArrayList<Booking>();
-		for(Booking buffer: bookingList.values()) {
+		for(Booking buffer: Data.bookingList.values()) {
 			if(buffer.getUserID() == userID) {
 				list.add(buffer);
 			}
@@ -80,7 +80,7 @@ public class BookingMgr {
 	
 	public static ArrayList<Booking> getAllBookingList(){
 		ArrayList<Booking> list = new ArrayList<Booking>();
-		for(Booking buffer: bookingList.values()) {
+		for(Booking buffer: Data.bookingList.values()) {
 			Booking copy = Booking.copy(buffer);
 			list.add(copy);
 		}
