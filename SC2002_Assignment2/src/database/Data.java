@@ -97,6 +97,10 @@ public class Data {
         ticketPrice = new TicketPrice();
         writeSerializedObject(FileType.TICKET_PRICE);
         
+        userAccountList = new HashMap<Integer, UserAccount>();
+        writeSerializedObject(FileType.USER);
+        
+        
         return true;
     }
 	
@@ -148,30 +152,13 @@ public class Data {
             	showStatusList = (HashMap<Integer, ShowStatus>) object;
             } else if(fileType == FileType.TICKET_PRICE) {
             	ticketPrice = (TicketPrice) object;
+            }else if(fileType == FileType.USER) {
+            	userAccountList = (HashMap<Integer, UserAccount>) object;
             }
             objectInputStream.close();
             fileInputStream.close();
         } catch (EOFException err) {
             System.out.println("Warning: " + err.getMessage());
-            if (fileType == FileType.BOOKING) {
-                bookingList = new HashMap<Integer, Booking>();
-            } else if (fileType == FileType.CINEMA) {
-                cinemaList = new HashMap<Integer, Cinema>();
-            } else if (fileType == FileType.CINEPLEX) {
-                cineplexList = new HashMap<Integer, Cineplex>();
-            } else if (fileType == FileType.HOLIDAY) {
-               holidayList  = new HashMap<Integer, Holiday>();
-            } else if (fileType == FileType.MOVIE) {
-                movieList = new HashMap<Integer, Movie>();
-            } else if (fileType == FileType.MOVIE_RANK) {
-            	movieRankList = new HashMap<Integer, MovieRank>();
-            } else if (fileType == FileType.MOVIE_REVIEW) {
-            	movieReviewList = new HashMap<Integer, MovieReview>();
-            } else if (fileType == FileType.SHOW_STATUS) {
-            	showStatusList = new HashMap<Integer, ShowStatus>();
-            } else if(fileType == FileType.TICKET_PRICE) {
-            	ticketPrice = new TicketPrice();
-            }
         } catch (IOException err) {
             err.printStackTrace();
             return false;

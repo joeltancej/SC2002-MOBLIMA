@@ -50,6 +50,25 @@ public class Printer {
 
 	}
 	
+	public static boolean printCheckAge(MovieAgeR movieAgeR, int age) {
+		if(movieAgeR == MovieAgeR.NC16 && age <16) {
+			System.out.println("Your must be at least 16 years old to book this movie!");
+			return false;
+		}
+		
+		if(movieAgeR == MovieAgeR.M18 && age <18) {
+			System.out.println("Your must be at least 18 years old to book this movie!");
+			return false;
+		}
+		
+		if(movieAgeR == MovieAgeR.R21 && age <21) {
+			System.out.println("Your must be at least 21 years old to book this movie!");
+			return false;
+		}
+		
+		return true;
+	}
+	
 	public static void displayHolidayList() {
 		ArrayList<Holiday> list = HolidayMgr.getAllHolidayList();
 		System.out.println();
@@ -82,11 +101,15 @@ public class Printer {
 	
 	public static ArrayList<ShowStatus> displayAllMovieShowTime() {
 		ArrayList<ShowStatus> showStatusList = ShowStatusMgr.getAllStatusList();
+		for(ShowStatus buffer : Data.showStatusList.values()) {
+			System.out.print(buffer.getShowStatusID());
+		}
 		if(showStatusList.size() ==0) {
 			System.out.print("\nShowTime Is Empty\n");
 			return showStatusList;
 		}
 		for(int i=0;i<showStatusList.size();i++) {
+			
 			Movie movie = MovieMgr.getMovieByID(showStatusList.get(i).getMovieID());
 			TimeUtils showtime = showStatusList.get(i).getShowTime();
 			DateUtils showDate = showStatusList.get(i).getShowDate();
@@ -204,7 +227,7 @@ public class Printer {
 			for(int i=0;i<limit;i++) {
 				if(i>=arr.size())return;
 				Movie movie = MovieMgr.getMovieByID(arr.get(i).getMovieID());
-				System.out.println((i+1)+") " + movie.getTitle());
+				System.out.println(i+1+") " + movie.getTitle());
 				String overall =  String.format("%.1f", arr.get(i).getOverallRating());
 				System.out.println("   Overall Rating: "+overall+"\n");
 			}
@@ -232,6 +255,7 @@ public class Printer {
 		}
 		System.out.println("\n"+(movieID+1)+")");
 		System.out.println("Title: "+movie.getTitle());
+		System.out.println("Movie Age Restriction: "+movie.getMovieAgeR());
 		System.out.println("Showing status: "+ movie.getMovieState());
 		System.out.println("Director: "+ movie.getDirector());
 		System.out.println("SYNOPSIS: "+ movie.getMovieContent());
@@ -256,7 +280,7 @@ public class Printer {
 			return;
 		}
 		double rating = buffer.getOverallRating();
-		String overall = String.format("%.1f", rating);
+		String overall =  String.format("%.1f", rating);
 		int raters = buffer.getNumRaters();
 		if(raters>1) {
 			System.out.println("Overall Rating: "+overall);

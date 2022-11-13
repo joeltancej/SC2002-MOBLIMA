@@ -5,6 +5,7 @@ import java.util.HashMap;
 import database.Data;
 import database.FileType;
 import model.Movie;
+import model.MovieAgeR;
 import model.MovieStatus;
 import model.ShowStatus;
 import utils.Helper;
@@ -17,13 +18,13 @@ public class MovieMgr {
 	
 	public static int createMovie(String title, String director, 
 			ArrayList<String> casts, String movieContent, double duration, MovieStatus state, 
-			int numRaters, double overallRating, double sales) {
+			int numRaters, double overallRating, double sales, MovieAgeR movieAgeR) {
 		
 		if(Validator.validateMovie(title)  == true) {
 			return -1;
 		}
 		int movieID = Helper.getUniqueId(Data.movieList);
-		Movie buffer = new Movie(movieID,title,director,casts,movieContent,duration,state);
+		Movie buffer = new Movie(movieID,title,director,casts,movieContent,duration,state,movieAgeR);
 		Data.movieList.put(movieID, buffer);
 		MovieRankMgr.createMovieRank(movieID, numRaters, overallRating, sales);
 		Data.saveFile(FileType.MOVIE);
@@ -32,13 +33,13 @@ public class MovieMgr {
 	}
 	
 	public static int createMovie(String title, String director, 
-			ArrayList<String> casts, String movieContent, double duration, MovieStatus state) {
+			ArrayList<String> casts, String movieContent, double duration, MovieStatus state,MovieAgeR movieAgeR) {
 		
 		if(Validator.validateMovie(title) == true) {
 			return -1;
 		}
 		int movieID = Helper.getUniqueId(Data.movieList);
-		Movie buffer = new Movie(movieID,title,director,casts,movieContent,duration,state);
+		Movie buffer = new Movie(movieID,title,director,casts,movieContent,duration,state,movieAgeR);
 		Data.movieList.put(movieID, buffer);
 		MovieRankMgr.createMovieRank(movieID);
 		
@@ -46,7 +47,7 @@ public class MovieMgr {
 		return movieID;
 		
 	}
-	
+
 	public static boolean removeMovie(int movieID) {
 		if(Validator.validateMovie(movieID) == false) {
 			return false;
@@ -61,6 +62,17 @@ public class MovieMgr {
 		return true;
 	}
 		
+	public static boolean updateMovieAgeR(int movieID, MovieAgeR movieAgeR) {
+		if(Validator.validateMovie(movieID) == false) {
+			return false;
+		}
+		Movie updateMovie = SearchUtils.searchMovie(movieID);
+		updateMovie.setMovieAgeR(movieAgeR);
+		Data.movieList.put(movieID, updateMovie);
+		Data.saveFile(FileType.MOVIE);
+		return true;
+	}
+	
 	public static boolean updateMovieContent(int movieID, String text) {
 		if(Validator.validateMovie(movieID) == false) {
 			return false;
@@ -163,7 +175,7 @@ public class MovieMgr {
 		return true;
 	}
 	
-
+	
 	public static Movie getMovieByID(int movieID) {
 		if(Validator.validateMovie(movieID) == false) {
 			return null;

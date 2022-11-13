@@ -15,12 +15,12 @@ public class MovieApp {
 			System.out.print("\n========================================\n");
 			System.out.print("             Movie Listing              \n");
 			System.out.print("========================================\n");
-			System.out.print("1) View full movie listing\n");
-			System.out.print("2) View top 5 movies by sales\n");
-			System.out.print("3) View top 5 movies by overall rating\n");
-			System.out.print("4) Search movie\n");
-			System.out.print("5) Book tickets\n");
-			System.out.print("6) Add movie review/rating\n");
+			System.out.print("1) View All Movie List\n");
+			System.out.print("2) View Top 5 Movie By Sales\n");
+			System.out.print("3) View Top 5 Movie By Overall Rating\n");
+			System.out.print("4) Search Movie\n");
+			System.out.print("5) Book Ticket\n");
+			System.out.print("6) Comment and Rate A Movie\n");
 			System.out.print("0) Go back\n");
 			System.out.print("\nEnter your choice: ");
 			num = sc.nextInt();
@@ -53,7 +53,7 @@ public class MovieApp {
 	
 	public static void CommentRate(Scanner sc) {
 		if(AppState.getUserID() ==-1) {
-			System.out.print("You must login first before you can rate a movie.\n");
+			System.out.print("You must login first before you can rate a movie\n");
 			return;
 		}
 		int movieID = Printer.SearchMovie(sc, "For Review", 1);
@@ -68,11 +68,16 @@ public class MovieApp {
 	
 	public static void BookTicket(Scanner sc) {
 		if(AppState.getUserID() ==-1) {
-			System.out.print("You must login first before you can book tickets.\n");
+			System.out.print("You must login first before you can book tickets\n");
 			return;
 		}
 		int movieID = Printer.SearchMovie(sc, "For Booking", 0);
 		if(movieID == -1) {
+			return;
+		}
+		Movie movie = MovieMgr.getMovieByID(movieID);
+		boolean agePass = Printer.printCheckAge(movie.getMovieAgeR(), movieID);
+		if(!agePass) {
 			return;
 		}
 		AppState.setMovieID(movieID);

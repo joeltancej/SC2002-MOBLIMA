@@ -2,6 +2,7 @@ package database;
 
 import java.util.ArrayList;
 
+
 import manager.*;
 import model.*;
 import utils.DateUtils;
@@ -97,7 +98,8 @@ public class DataInitializer {
 				//Overall Rating
 				3,
 				//Sales
-				100
+				100,
+				MovieAgeR.G
 		);
 		
 		
@@ -124,7 +126,8 @@ public class DataInitializer {
 				//Overall Rating
 				5,
 				//Sales
-				10
+				10,
+				MovieAgeR.G
 		);
 		
 		casts = new ArrayList<String>();
@@ -150,7 +153,8 @@ public class DataInitializer {
 				//Overall Rating
 				4.5,
 				//Sales
-				140
+				140,
+				MovieAgeR.G
 		);
 		
 		
@@ -177,7 +181,8 @@ public class DataInitializer {
 				//Overall Rating
 				0,
 				//Sales
-				0
+				0,
+				MovieAgeR.R21
 		);
 		
 		
@@ -204,7 +209,8 @@ public class DataInitializer {
 				//Overall Rating
 				0,
 				//Sales
-				0
+				0,
+				MovieAgeR.PG13
 		);
 		
 		casts = new ArrayList<String>();
@@ -232,7 +238,8 @@ public class DataInitializer {
 				//Overall Rating
 				0,
 				//Sales
-				0
+				0,
+				MovieAgeR.PG
 		);
 	}
 	

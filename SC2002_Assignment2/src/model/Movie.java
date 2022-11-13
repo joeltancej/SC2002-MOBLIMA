@@ -15,9 +15,10 @@ public class Movie implements Serializable{
     private String movieContent;
     private double duration;
     private MovieStatus state;
+    private MovieAgeR movieAgeR;
     
     public Movie(int movieID, String title, String director, ArrayList<String> casts, 
-    		String movieContent, double duration, MovieStatus state) {
+    		String movieContent, double duration, MovieStatus state, MovieAgeR movieAgeR) {
     	this.movieID = movieID;
     	this.title = title;
     	this.director = director;
@@ -25,6 +26,7 @@ public class Movie implements Serializable{
     	this.movieContent = movieContent;
     	this.duration = duration;
     	this.state = state;
+    	this.movieAgeR = movieAgeR;
 
     }
     public static Movie copy(Movie another) {
@@ -35,7 +37,8 @@ public class Movie implements Serializable{
     			another.getCasts(),
     			another.getMovieContent(),
     			another.getDuration(),
-    			another.getMovieState()
+    			another.getMovieState(),
+    			another.getMovieAgeR()
     	);
     	return movie;
     }
@@ -96,6 +99,12 @@ public class Movie implements Serializable{
     public void setDuration(double duration){
         this.duration = duration;
     }
+	public MovieAgeR getMovieAgeR() {
+		return movieAgeR;
+	}
+	public void setMovieAgeR(MovieAgeR movieAgeR) {
+		this.movieAgeR = movieAgeR;
+	}
 
 
 }

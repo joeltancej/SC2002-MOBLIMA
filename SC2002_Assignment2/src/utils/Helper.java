@@ -33,7 +33,7 @@ public class Helper {
 			name = name.toLowerCase();
 			String title = buffer.getTitle().toLowerCase();
 			if(title.contains(name)) {
-				if(buffer.getMovieState() == MovieStatus.NOW_SHOWING) {
+				if(buffer.getMovieState() == MovieStatus.NOW_SHOWING || buffer.getMovieState() == MovieStatus.PREVIEW) {
 					result.add(buffer);
 				}
 			}
